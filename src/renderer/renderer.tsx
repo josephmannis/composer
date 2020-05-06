@@ -6,6 +6,7 @@ import * as ReactDOM from 'react-dom';
 
 // Import the styles here to process them with webpack
 import '@public/style.css';
+import styled from 'styled-components';
 
 ReactDOM.render(
   <div className='app'>
