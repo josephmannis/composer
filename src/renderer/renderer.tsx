@@ -9,8 +9,6 @@ import '@public/style.css';
 import EmailBuilderPage from '@/components/pages/email-builder/EmailBuilderPage';
 
 ReactDOM.render(
-  <div className='app'>
-    <EmailBuilderPage/>
-  </div>,
+    <EmailBuilderPage/>,
   document.getElementById('app')
 );

@@ -1,17 +1,16 @@
 import React from 'react';
 import { CheckLabel } from './styled';
 import { Input } from '@/components/atoms/input/Input';
-import { IEmailContent } from '@/components/lib/client';
+import { IEmailSection, IEmailSectionOption } from '@/components/lib/client';
+import ToggleableSection from '@/components/molecules/toggleable-section/ToggleableSection';
 
 interface IEmailFormBuilderProps {
-    defaultContent: IEmailContent;
     onEmailUpdated: (email: string) => void;
+    sections: IEmailSection[];
 }
 
 interface IEmailFormBuilderState {
-    greeting: string;
-    closing: string;
-    selectedIssues: string[];
+    selectedIssues: IEmailSectionOption[];
 }
 
 class EmailBuilder extends React.Component<IEmailFormBuilderProps, IEmailFormBuilderState> {
@@ -20,68 +19,53 @@ class EmailBuilder extends React.Component<IEmailFormBuilderProps, IEmailFormBui
     constructor(props: IEmailFormBuilderProps) {
         super(props);
         this.inputRefs = [];
-        this.state = {
-            greeting: props.defaultContent.greeting,
-            closing: props.defaultContent.closing,
-            selectedIssues: []
-        }
+        this.state = { selectedIssues: [] }
+        console.log(props.sections)
     }
 
     resolveIssueValues(): string {
-        let phrases = this.props.defaultContent.issueFields;
         let text = ""
-        this.state.selectedIssues.forEach(k => text += `${phrases.get(k)}\n`);
+        this.state.selectedIssues.forEach(k => text += `${k.phrase}\n`);
         return text;
     }
 
     buildEmail() {
-        let text = `${this.state.greeting}\n\n${this.resolveIssueValues()}\n${this.state.closing}`
+        let text = `${this.resolveIssueValues()}\n`
         this.props.onEmailUpdated(text);
     }
 
     onIssueToggled = (e: React.ChangeEvent<HTMLInputElement>) => {
         let id = e.target.name;
+        let value = e.target.value;
         let newIssueState = [...this.state.selectedIssues];
-        if (newIssueState.includes(id)) newIssueState = newIssueState.filter(i => i !== id);
-        else newIssueState = [...newIssueState, id];
+        let existingItem = newIssueState.find((item) => item.name === id);
+        if (existingItem) newIssueState = newIssueState.filter(i => i.name !== id);
+        else newIssueState = [...newIssueState, {name: id, phrase: value}];
 
         this.setState({...this.state, selectedIssues: newIssueState}, () => this.buildEmail());
     }
 
-    onGreetingChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({...this.state, greeting: e.target.value}, () => this.buildEmail());
-    }
-
-
-    onClosingChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({...this.state, closing: e.target.value}, () => this.buildEmail());
-    }
-
     render() {
         return (
-            <form>                            
-                <label>
-                    Greeting:
-                    <Input onChange={(e) => this.onGreetingChanged(e)} defaultValue={this.state.greeting} name="greeting" type='text'/>
-                </label>
-                <ul>
-                    { Array.from(this.props.defaultContent.issueFields.keys()).map((issueName, i) => 
-                        <div key={i}>
-                            <input 
-                                ref={e => this.inputRefs = [...this.inputRefs, e]} 
-                                checked={this.state.selectedIssues.includes(issueName)} 
-                                type='checkbox' 
-                                name={issueName}
-                                onChange={(e) => this.onIssueToggled(e)}
-                            /> 
-                            <CheckLabel>{issueName}</CheckLabel>
-                        </div>
-                    ) }
-                </ul>
-                <label>
-                    Closing:
-                    <Input onChange={(e) => this.onClosingChanged(e)} defaultValue={this.state.closing} name="closing" type='text'/>
-                </label>
+            <form>
+                { this.props.sections.map((section, i) => {
+                        return <ToggleableSection key={i} title={section.sectionTitle}>
+                            { section.options.map((option, i) => 
+                                <div key={i}>
+                                    <input 
+                                        ref={e => this.inputRefs = [...this.inputRefs, e]} 
+                                        checked={this.state.selectedIssues.findIndex(o => o.name === option.name) !== -1} 
+                                        type='checkbox' 
+                                        name={option.name}
+                                        value={option.phrase}
+                                        onChange={(e) => this.onIssueToggled(e)}
+                                    /> 
+                                    <CheckLabel>{option.name}</CheckLabel>
+                                </div>
+                            ) }
+                        </ToggleableSection>
+                    })
+                }
             </form>
         )
     }

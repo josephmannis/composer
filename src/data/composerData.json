@@ -1,0 +1,43 @@
+{
+    "sections": [
+        {
+            "sectionTitle": "Greetings",
+            "options": [
+                {
+                    "name": "Problem",
+                    "phrase": "Thank you so much for complaining about your problem!"
+                },
+                {
+                    "name": "Query",
+                    "phrase": "I would LOVE to answer your question"
+                }
+            ]
+        },
+        {
+            "sectionTitle": "Issues",
+            "options": [
+                {
+                    "name": "Dirty Lens",
+                    "phrase": "Well clean that stuff bro."
+                },
+                {
+                    "name": "Resin Spill",
+                    "phrase": "You should be more careful :/"
+                }
+            ]
+        },
+        {
+            "sectionTitle": "Closings",
+            "options": [
+                {
+                    "name": "Formal",
+                    "phrase": "Well I'll be seing you"
+                },
+                {
+                    "name": "See you again",
+                    "phrase": "Looking forward to seeing you again!"
+                }
+            ]
+        }
+    ]
+}

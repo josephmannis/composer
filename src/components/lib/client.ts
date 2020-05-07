@@ -1,5 +1,9 @@
-export interface IEmailContent {
-    greeting: string;
-    closing: string;
-    issueFields: Map<string, string>;
+export interface IEmailSection {
+    sectionTitle: string;
+    options: IEmailSectionOption[];
+}
+
+export interface IEmailSectionOption { 
+    name: string;
+    phrase: string;
 }
