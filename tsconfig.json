@@ -9,7 +9,9 @@
       "@main/*": ["src/main/*"],
       "@models/*": ["src/models/*"],
       "@renderer*/": ["src/renderer/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@components/*": ["src/components/*"],
+      "@data/*": ["src/data/*"],
     },
     "module": "commonjs",
     "moduleResolution": "node",
@@ -17,7 +19,9 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     "sourceMap": true,
-    "target": "esnext"
+    "target": "esnext",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
   },
   "exclude": ["node_modules"]
 }

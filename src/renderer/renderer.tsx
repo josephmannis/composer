@@ -6,12 +6,11 @@ import * as ReactDOM from 'react-dom';
 
 // Import the styles here to process them with webpack
 import '@public/style.css';
-import styled from 'styled-components';
+import EmailBuilderPage from '@/components/pages/email-builder/EmailBuilderPage';
 
 ReactDOM.render(
   <div className='app'>
-    <h4>Welcome to React, Electron and Typescript</h4>
-    <p>Hello</p>
+    <EmailBuilderPage/>
   </div>,
   document.getElementById('app')
 );
