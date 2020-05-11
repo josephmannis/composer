@@ -1,16 +1,16 @@
 import React from 'react';
 import { CheckLabel } from './styled';
 import { Input } from '@/components/atoms/input/Input';
-import { IEmailSection, IEmailSectionOption } from '@/components/lib/client';
+import { IContext, IOption } from '@/components/lib/client';
 import ToggleableSection from '@/components/molecules/toggleable-section/ToggleableSection';
 
 interface IEmailFormBuilderProps {
     onEmailUpdated: (email: string) => void;
-    sections: IEmailSection[];
+    context: IContext;
 }
 
 interface IEmailFormBuilderState {
-    selectedIssues: IEmailSectionOption[];
+    selectedIssues: IOption[];
 }
 
 class EmailBuilder extends React.Component<IEmailFormBuilderProps, IEmailFormBuilderState> {
@@ -20,7 +20,6 @@ class EmailBuilder extends React.Component<IEmailFormBuilderProps, IEmailFormBui
         super(props);
         this.inputRefs = [];
         this.state = { selectedIssues: [] }
-        console.log(props.sections)
     }
 
     resolveIssueValues(): string {
@@ -48,7 +47,7 @@ class EmailBuilder extends React.Component<IEmailFormBuilderProps, IEmailFormBui
     render() {
         return (
             <form>
-                { this.props.sections.map((section, i) => {
+                { this.props.context.sections.map((section, i) => {
                         return <ToggleableSection key={i} title={section.sectionTitle}>
                             { section.options.map((option, i) => 
                                 <div key={i}>

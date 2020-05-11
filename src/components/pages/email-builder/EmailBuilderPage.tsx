@@ -1,5 +1,5 @@
 import * as React from 'react';
-import emailSectionValues from '@/data/composerData.json';
+import composerData from '@/data/composerData.json';
 import { BuilderPageWrapper, Panel, EmailPreview } from './styled';
 import EmailBuilder from '@/components/organisms/email-builder-form/EmailBuilderForm';
 
@@ -13,7 +13,8 @@ const EmailBuilderPage: React.FC = () => {
                 <h3>Build Email</h3>
                 <EmailBuilder 
                     onEmailUpdated={(email) => setText(email)}
-                    sections={emailSectionValues.sections}
+                    // TODO: lift this to context, eventually
+                    context={composerData}
                 />
             </Panel>
             <Panel>
