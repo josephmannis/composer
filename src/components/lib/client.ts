@@ -15,11 +15,10 @@ export interface IOption {
 }
 
 export interface IComposition {
-    sections: ICompositionSection;
+    sections: ICompositionSection[];
 }
 
 export interface ICompositionSection {
     id: string;
-    position: number;
     text: string;
 }

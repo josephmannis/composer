@@ -6,9 +6,10 @@ import * as ReactDOM from 'react-dom';
 
 // Import the styles here to process them with webpack
 import '@public/style.css';
-import EmailBuilderPage from '@/components/pages/email-builder/EmailBuilderPage';
+import CompositionBuilderPage from '@/components/pages/composition-builder/CompositionBuilderPage';
+import 'tachyons';
 
 ReactDOM.render(
-    <EmailBuilderPage/>,
+    <CompositionBuilderPage/>,
   document.getElementById('app')
 );

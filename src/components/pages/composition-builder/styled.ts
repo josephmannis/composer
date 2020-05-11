@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Card } from "@/components/atoms/card/Card";
 
 
-export const Panel = styled(Card)`
+export const Panel = styled.div`
     display: flex;
     flex-direction: column;
     padding: 1.5em;
@@ -24,14 +24,4 @@ export const BuilderPageWrapper = styled.div`
     & ${Panel} {
         margin: 1.5em 1.5em;
     }
-`
-
-export const EmailPreview = styled.div`
-    background-color: #fff5ea;
-    border: none;
-    border-radius: 10px;
-    padding: 1em;
-    white-space: pre-wrap;
-    resize: horizontal;
-    height: 100%;
 `
