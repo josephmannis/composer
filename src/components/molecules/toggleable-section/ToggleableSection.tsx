@@ -3,11 +3,11 @@ import { SectionHeader } from './styled';
 import { Toggle } from '@/components/atoms/toggle/Toggle';
 
 
-interface IEmailBuilderSectionProps {
+interface ICompositionBuilderSectionProps {
     title: string;
 }
 
-const ToggleableSection: React.FC<IEmailBuilderSectionProps> = props => {
+const ToggleableSection: React.FC<ICompositionBuilderSectionProps> = props => {
     const [showContent, toggleContent] = React.useState(false);
     return (
         <>

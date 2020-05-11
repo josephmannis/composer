@@ -20,6 +20,5 @@ export interface IComposition {
 
 export interface ICompositionSection {
     id: string;
-    position: number;
     text: string;
 }
