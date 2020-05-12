@@ -1,6 +1,7 @@
 import React from 'react';
-import { SectionHeader } from './styled';
+import { SectionTitle, Section, SectionTitleWrapper, SectionContent } from './styled';
 import { Toggle } from '@/components/atoms/toggle/Toggle';
+import { Card } from '@/components/atoms/card/Card';
 
 
 interface ICompositionBuilderSectionProps {
@@ -10,15 +11,17 @@ interface ICompositionBuilderSectionProps {
 const ToggleableSection: React.FC<ICompositionBuilderSectionProps> = props => {
     const [showContent, toggleContent] = React.useState(false);
     return (
-        <>
-            <SectionHeader onClick={() => toggleContent(!showContent)}>
-                <h4>{props.title}</h4>
-                <h4>{showContent ? '-' : '+'}</h4>
-            </SectionHeader>
+        <Section>
+            <SectionTitleWrapper showingContent={showContent} onClick={() => toggleContent(!showContent)}>
+                <SectionTitle>{props.title}</SectionTitle>
+                <SectionTitle>{showContent ? '-' : '+'}</SectionTitle>
+            </SectionTitleWrapper>
             <Toggle show={showContent}>
-                {props.children}
+                <SectionContent>
+                    {props.children}
+                </SectionContent>
             </Toggle>
-        </>
+        </Section>
     )
 }
 

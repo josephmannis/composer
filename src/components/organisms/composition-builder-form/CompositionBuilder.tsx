@@ -1,6 +1,7 @@
 import React from 'react';
 import { IContext, IOption } from '@/components/lib/client';
 import ToggleableSection from '@/components/molecules/toggleable-section/ToggleableSection';
+import { IconTag } from '@/components/atoms/tag/Tag';
 
 interface ICompositionBuilderProps {
     onOptionSelected: (option: IOption) => void;
@@ -12,11 +13,15 @@ export const CompositionBuilder: React.FC<ICompositionBuilderProps> = ({onOption
         <>
             { selectedContext.sections.map((section, i) => {
                     return <ToggleableSection key={i} title={section.sectionTitle}>
-                        { section.options.map((option, i) => 
-                            <div key={i} onClick={() => onOptionSelected(option)}>
-                                {option.name}
-                            </div>
-                        ) }
+                        <div className='flex flex-wrap w-100'>
+                            { section.options.map((option, i) => 
+                                <div className='mr3' onClick={() => onOptionSelected(option)}>
+                                    <IconTag icon='plus' key={i}>
+                                            {option.name}
+                                    </IconTag>
+                                </div>
+                            ) }
+                        </div>
                     </ToggleableSection>
                 })
             }

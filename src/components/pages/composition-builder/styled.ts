@@ -7,7 +7,6 @@ export const Panel = styled.div`
     flex-direction: column;
     padding: 1.5em;
     width: 50%;
-    overflow: scroll;
     & h3 {
         margin-top: 0;
     }
