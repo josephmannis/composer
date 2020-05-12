@@ -5,14 +5,15 @@ import CompositionBuilder from '@/components/organisms/composition-builder-form/
 import CompositionPreview from '@/components/organisms/composition-preview/CompositionPreview';
 import { useCompositionState } from '@/state/composition/useCompositionState';
 import { IOption } from '@/components/lib/client';
-import { Card } from '@/components/atoms/card/Card';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const CompositionBuilderPage: React.FC = () => {
     const { composition, addSection } = useCompositionState();
     
     const onOptionAdded = (option: IOption) => {
         addSection({
-            id: 'stub',
+            id: uuidv4(),
             text: option.phrase
         })
     }
@@ -20,17 +21,15 @@ const CompositionBuilderPage: React.FC = () => {
     return (
         <BuilderPageWrapper>
             <Panel>
-                <Card>
-                    <h3>Build Composition</h3>
-                    <CompositionBuilder 
-                        onOptionSelected={(option) => onOptionAdded(option)}
-                        // TODO: Move this to a service that fetches it, eventually
-                        selectedContext={composerData}
-                        />
-                </Card>
+                <h2>Build Composition</h2>
+                <CompositionBuilder 
+                    onOptionSelected={(option) => onOptionAdded(option)}
+                    // TODO: Move this to a service that fetches it, eventually
+                    selectedContext={composerData}
+                    />
             </Panel>
             <Panel>
-                <h3>Preview</h3>
+                <h2>Preview</h2>
                 <CompositionPreview composition={composition}/>
             </Panel>
         </BuilderPageWrapper>
