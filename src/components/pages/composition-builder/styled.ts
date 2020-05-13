@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Card } from "@/components/atoms/card/Card";
 
 
 export const Panel = styled.div`
@@ -7,6 +6,8 @@ export const Panel = styled.div`
     flex-direction: column;
     padding: 1.5em;
     width: 50%;
+    overflow-y: auto;
+
     & h3 {
         margin-top: 0;
     }

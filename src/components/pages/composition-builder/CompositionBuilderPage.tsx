@@ -6,6 +6,7 @@ import CompositionPreview from '@/components/organisms/composition-preview/Compo
 import { useCompositionState } from '@/state/composition/useCompositionState';
 import { IOption } from '@/components/lib/client';
 import { v4 as uuidv4 } from 'uuid';
+import Menu from '@/components/molecules/menu/Menu';
 
 
 const CompositionBuilderPage: React.FC = () => {
@@ -22,10 +23,13 @@ const CompositionBuilderPage: React.FC = () => {
         <BuilderPageWrapper>
             <Panel>
                 <h2>Build Composition</h2>
-                <CompositionBuilder 
-                    onOptionSelected={(option) => onOptionAdded(option)}
-                    // TODO: Move this to a service that fetches it, eventually
-                    selectedContext={composerData}
+                <div className='w-50 mb3'>
+                    <Menu options={['Support Email', 'Bidness Email', 'Love letter']}/>
+                </div>
+                    <CompositionBuilder 
+                        onOptionSelected={(option) => onOptionAdded(option)}
+                        // TODO: Move this to a service that fetches it, eventually
+                        selectedContext={composerData}
                     />
             </Panel>
             <Panel>

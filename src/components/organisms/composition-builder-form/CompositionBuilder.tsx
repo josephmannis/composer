@@ -1,8 +1,8 @@
 import React from 'react';
 import { IContext, IOption, ISection } from '@/components/lib/client';
-import CardAccordion from '@/components/molecules/card-accordion/CardAccordion';
 import { IconTag } from '@/components/atoms/tag/Tag';
 import { v4 } from 'uuid';
+import CardAccordion from '@/components/molecules/card-accordion/CardAccordion';
 
 interface ICompositionBuilderProps {
     onOptionSelected: (option: IOption) => void;

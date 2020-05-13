@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import { scaleOnHover } from "@/css/transition";
+import { scaleOnHover } from "@/global-styles/transitions";
 
 export const Tag = styled.div`
     background-color: #3BA9ED;

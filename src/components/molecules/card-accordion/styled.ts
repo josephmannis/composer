@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Card } from "@/components/atoms/card/Card";
-import { scaleOnHover } from "@/css/transition";
+import { scaleOnHover } from "@/global-styles/transitions";
 
 
 interface IAccordionWrapperProps {
