@@ -1,5 +1,5 @@
 import React from 'react';
-import { AccordionHeader, AccordionWrapper, AccordionContent } from './styled';
+import { AccordionHeader, AccordionContent } from './styled';
 import { Toggle } from '@/components/atoms/toggle/Toggle';
 
 
@@ -11,7 +11,7 @@ interface ICompositionBuilderAccordionProps {
 const CardAccordion: React.FC<ICompositionBuilderAccordionProps> = ({headerContent, bodyContent}) => {
     const [showContent, toggleContent] = React.useState(false);
     return (
-        <AccordionWrapper>
+        <>
             <AccordionHeader showingContent={showContent} onClick={() => toggleContent(!showContent)}>
                 {headerContent}
 
@@ -22,7 +22,7 @@ const CardAccordion: React.FC<ICompositionBuilderAccordionProps> = ({headerConte
                     {bodyContent}
                 </AccordionContent>
             </Toggle>
-        </AccordionWrapper>
+        </>
     )
 }
 

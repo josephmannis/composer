@@ -1,4 +1,4 @@
-import React, { useRef, createRef } from 'react';
+import React from 'react';
 import { MenuInput, MenuItem, MenuDropdown } from './styled';
 import { Toggle } from '@/components/atoms/toggle/Toggle';
 
@@ -10,7 +10,7 @@ interface IMenuProps {
 const Menu: React.FC<IMenuProps> = ({options}) => {
     const [current, setCurrent] = React.useState('')
     const [showOptions, toggleOptions] = React.useState(false);
-
+    // TODO: add callaback
     React.useEffect(() => {
         if (options.length !== 0) setCurrent(options[0]);
     }, [])
