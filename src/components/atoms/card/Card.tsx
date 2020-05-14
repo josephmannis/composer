@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { applyShadow, applyRadius } from "@/global-styles/attributes";
 
 export const Card = styled.div`
-    border-radius: 15px;
-    box-shadow: 0 0 26px lightgray;
     background-color: white;
     width: 100%;
+    ${applyShadow};
+    ${applyRadius}
 `

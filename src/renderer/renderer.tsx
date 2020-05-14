@@ -5,11 +5,15 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 // Import the styles here to process them with webpack
-import '@public/style.css';
 import CompositionBuilderPage from '@/components/pages/composition-builder/CompositionBuilderPage';
+import { StyleBaseline } from '@/global-styles/baseline';
 import 'tachyons';
+import '@public/style.css';
 
 ReactDOM.render(
-    <CompositionBuilderPage/>,
+  <>
+    <StyleBaseline/>
+    <CompositionBuilderPage/>
+  </>,
   document.getElementById('app')
 );

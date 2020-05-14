@@ -1,8 +1,7 @@
 import React from 'react';
 import { IContext, IOption, ISection } from '@/components/lib/client';
-import CardAccordion from '@/components/molecules/card-accordion/CardAccordion';
 import { IconTag } from '@/components/atoms/tag/Tag';
-import { v4 } from 'uuid';
+import CardAccordion from '@/components/molecules/card-accordion/CardAccordion';
 
 interface ICompositionBuilderProps {
     onOptionSelected: (option: IOption) => void;
@@ -12,8 +11,8 @@ interface ICompositionBuilderProps {
 export const CompositionBuilder: React.FC<ICompositionBuilderProps> = ({onOptionSelected, selectedContext}) => {
     const tagOptions = (section: ISection) => {
         return (
-            section.options.map((option) => 
-                <div key={v4()} className='mr3' onClick={() => onOptionSelected(option)}>
+            section.options.map((option, i) => 
+                <div key={i} className='mr3 mb3' onClick={() => onOptionSelected(option)}>
                     <IconTag icon='plus' >
                         {option.name}
                     </IconTag>
@@ -22,25 +21,27 @@ export const CompositionBuilder: React.FC<ICompositionBuilderProps> = ({onOption
         )   
     }
 
-    const buildSection = (section: ISection) => {
+    const buildSection = (section: ISection, key: number) => {
         return (
-            <CardAccordion
-                key={v4()}
-                headerContent={<>{section.sectionTitle}</>}
-                bodyContent={
-                    <div>
-                        <div className='flex flex-wrap w-100'>
-                            { tagOptions(section) }
+            <div className='mb3'>
+                <CardAccordion
+                    key={key}
+                    headerContent={<>{section.sectionTitle}</>}
+                    bodyContent={
+                        <div>
+                            <div className='flex flex-wrap w-100'>
+                                { tagOptions(section) }
+                            </div>
+                            { section.subSections.map((section, i) => buildSection(section, i)) }
                         </div>
-                        { section.subSections.map((section) => buildSection(section)) }
-                    </div>
-                }/>
+                    }/>
+            </div>
             )
         }
     
     return (
         <>
-            { selectedContext.sections.map((section, i) => buildSection(section)) }
+            { selectedContext.sections.map((section, i) => buildSection(section, i)) }
         </>
     )
 }

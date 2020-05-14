@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Card } from "@/components/atoms/card/Card";
-import { scaleOnHover } from "@/css/transition";
+import { scaleOnHover } from "@/global-styles/transitions";
 
 
 interface IAccordionWrapperProps {
@@ -12,7 +12,7 @@ export const AccordionHeader = styled(Card)<IAccordionWrapperProps>`
     justify-content: space-between;
     transition: all 0s ease-in-out;
     background-color: white;
-    padding: 1.75em;
+    padding: 1.5em;
     font-weight: bolder;
     box-shadow: 0 0 26px lightgray;
     border-bottom-left-radius: ${props => props.showingContent ? '0' : ''};
@@ -36,8 +36,4 @@ export const AccordionContent = styled(Card)`
         padding-right: 0;
         padding-bottom: 0;
     }
-`
-
-export const AccordionWrapper = styled.div`
-    margin-bottom: 2em;
 `
