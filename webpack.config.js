@@ -20,10 +20,8 @@ const commonConfig = {
     alias: {
       '@': srcPaths('src'),
       '@main': srcPaths('src/main'),
-      '@models': srcPaths('src/models'),
+      '@renderer': srcPaths('src/main/viewrenderer'),
       '@public': srcPaths('public'),
-      '@renderer': srcPaths('src/renderer'),
-      '@utils': srcPaths('src/utils'),
     },
     extensions: ['.js', '.json', '.ts', '.tsx'],
   },
@@ -66,7 +64,7 @@ mainConfig.plugins = [
 ];
 
 const rendererConfig = lodash.cloneDeep(commonConfig);
-rendererConfig.entry = './src/renderer/renderer.tsx';
+rendererConfig.entry = './src/main/view/renderer/renderer.tsx';
 rendererConfig.target = 'electron-renderer';
 rendererConfig.output.filename = 'renderer.bundle.js';
 rendererConfig.plugins = [
