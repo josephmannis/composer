@@ -9,17 +9,16 @@ import { v4 } from 'uuid';
  * 
  * There is no limit as to how many subsections a Section may contain. 
  */
-export class Section {
+export class ContextSection {
     readonly id: string;
     private _sectionTitle: string;
     private _options: Option[];
-    private _subSections: Section[];
+    private _parent?: ContextSection;
 
     constructor(sectionTitle: string) {
         this.id = v4();
         this._sectionTitle = sectionTitle;
         this._options = [];
-        this._subSections = [];
     }
     
     get sectionTitle(): string {
@@ -38,28 +37,7 @@ export class Section {
         this._options = options;
     }
 
-    get subSections(): Section[] {
-        return [...this._subSections];
+    set parent(parent: ContextSection) {
+        this._parent = parent;
     }
-
-    addSubsection(section: Section) {
-        this._subSections = [...this._subSections, section];
-    }
-
-    removeSubsection(subsectionId: string) {
-        this._subSections = this._subSections.filter(s => s.id !== subsectionId);
-    }
-
-    // addOption(option: Option) {
-    //     if (this._options.find(o => o.name === option.name)) throw new Error(`This section already contains an option with the name ${option.name}.`);
-    //     this._options = [...this._options, option];
-    // }
-
-    // removeOption(option: Option) {
-    //     this._options = this._options.filter(o => o !== option);
-    // }
-
-    // updateOption(oldOption: Option, newOption: Option) {
-    //     this._options = this._options.map(o => o === oldOption ? newOption: o);
-    // }
 }
