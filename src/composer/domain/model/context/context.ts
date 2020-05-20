@@ -19,10 +19,6 @@ export class Context {
         this._sections = new Map();
     }
 
-    get sections(): Section[] {
-        return [...this._sections.values()];
-    }
-
     get name(): string {
         return this._name;
     }
@@ -51,24 +47,31 @@ export class Context {
         this._sections.set(section.id, section);
     }
 
+    removeSubsectionFromSection(parentSectionId: string, section: Section) {
+        let parent = this.getSection(parentSectionId);
+
+        // Add to parent's subsections
+        parent.addSubsection(section);
+
+        // Remember section for later
+        this._sections.set(section.id, section);
+    }
+
+    setSectionParent(sectionId: string, parentId: string) {
+        let section = this.getSection(sectionId);
+        let toSection = this.getSection(parentId);
+        
+        
+    }
+
     updateSectionName(sectionId: string, name: string) {
         let section = this.getSection(sectionId);
         section.sectionTitle = name;
     }
 
-    addOptionToSection(option: Option, sectionId: string) {
+    setOptionsForSection(sectionId: string, options: Option[]) {
         let section = this.getSection(sectionId);
-        section.addOption(option);
-    }
-
-    removeOptionFromSection(option: Option, sectionId: string) {
-        let section = this.getSection(sectionId);
-        section.removeOption(option);
-    }
-
-    updateOptionInSection(option: Option, newOption: Option, sectionId: string) {
-        let section = this.getSection(sectionId);
-        section.updateOption(option, newOption);
+        section.options = options;
     }
 
     private getSection(sectionId: string): Section {
