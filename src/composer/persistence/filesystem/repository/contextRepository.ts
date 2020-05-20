@@ -1,24 +1,18 @@
-import { IService } from "../base";
-import { v4 } from "uuid";
-import { IContextAggregate, IPersistedContextModel } from "@model/context/model";
-import { IFileManager, JSONFileManager } from "@main/persistence/database/fileManager";
-import { basePath, userDataPaths } from "@main/persistence/util/pathProvider";
+import { Context } from "@model/context/context";
+import { IFileManager, JSONFileManager } from "@main/persistence/filesystem/util/fileManager";
+import { basePath, userDataPaths } from "@main/persistence/filesystem/util/pathProvider";
+import { IContextRepository } from "@model/context/repository";
 
 
-/**
- * Service that handles CRUD for Contexts. This is really more of a repository, but adding a repository
- * is an unnecessary layer of abstraction for the moment. In the future, it would be better to put business
- * operations on this and delegate all of the filesystem interaction to a Context repository.
- */
-export class ContextService implements IService<IContextAggregate, IPersistedContextModel> {
+export class ContextRepository implements IContextRepository {
     private fileManager: IFileManager;
     private basePath = `${basePath()}/${userDataPaths.CONTEXT}`;
-    
+
     constructor(fileManager: IFileManager = new JSONFileManager()) {
         this.fileManager = fileManager;
     }
 
-    all(): Promise<IContextAggregate[]> {
+    getAll(): Promise<Context[]> {
         return new Promise((resolve, reject) => {
             try {
                 let items = this.fileManager.getDirectoryContents(this.basePath);
@@ -30,7 +24,7 @@ export class ContextService implements IService<IContextAggregate, IPersistedCon
         })
     }
 
-    select(id: string): Promise<IContextAggregate> {
+    get(id: string): Promise<Context> {
         try {
             let file = this.fileManager.readFile(this.getPath(id));
             let aggregate = JSON.parse(file);
@@ -41,15 +35,10 @@ export class ContextService implements IService<IContextAggregate, IPersistedCon
         }
     }
 
-    create(model: IPersistedContextModel): Promise<IContextAggregate> {
-        return this.writeContextAggregate(v4(), model);
+    save(model: Context): Promise<Context> {
+        return this.writeContextAggregate(model);
     }
 
-    update(id: string, model: IPersistedContextModel): Promise<IContextAggregate> {
-        // Should error out if ID does not exist
-        return this.writeContextAggregate(id, model);
-    }
-    
     delete(id: string): Promise<void> {
         return new Promise((resolve, reject) => {
             try {
@@ -60,18 +49,12 @@ export class ContextService implements IService<IContextAggregate, IPersistedCon
             }
         })
     }
-
-    private writeContextAggregate(id: string, model: IPersistedContextModel): Promise<IContextAggregate> {
-        // TODO: At scale, move to a Factory
-        let aggregate: IContextAggregate = {
-            id: id,
-            model: model
-        }
-
+    
+    private writeContextAggregate(model: Context): Promise<Context> {
         return new Promise((resolve, reject) => {
             try {
-                this.fileManager.writeFile(this.getPath(id), JSON.stringify(aggregate));
-                resolve(aggregate);
+                this.fileManager.writeFile(this.getPath(model.id), JSON.stringify(model));
+                resolve(model);
             } catch(error) {
                 reject(`There was an error writing the Context: ${error}`);
             }

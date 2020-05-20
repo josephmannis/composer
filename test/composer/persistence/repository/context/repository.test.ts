@@ -19,3 +19,10 @@ test('When there are no contexts, getting all returns an empty list', () => {
         expect(res).toEqual([])
     })
 });
+
+
+
+
+
+
+

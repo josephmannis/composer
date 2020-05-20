@@ -1,0 +1,1 @@
+export type Tree<T> = { data: T, left?: Tree<T>, right?: Tree<T>}

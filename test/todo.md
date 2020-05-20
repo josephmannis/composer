@@ -1,7 +1,7 @@
 #### Install
 - On first install, all directories in userPaths are created
 
-#### Service
+#### Repository
 ##### all
 - When there are no contexts in the user directories, the size of the list returned is zero
 - When there are more than zero.... the size of the list is more than zero

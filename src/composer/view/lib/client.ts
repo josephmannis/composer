@@ -5,6 +5,7 @@ export interface IContext {
 }
 
 export interface ISection {
+    id: string;
     sectionTitle: string;
     options: IOption[];
     subSections: ISection[];

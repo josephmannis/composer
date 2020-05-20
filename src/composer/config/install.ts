@@ -1,5 +1,5 @@
 import { mkdirSync, existsSync } from 'fs';
-import { userDataPaths, basePath } from '../persistence/util/pathProvider';
+import { userDataPaths, basePath } from '../persistence/filesystem/util/pathProvider';
 
 // TODO: if this gets bigger, probably want to add some kind of check to see if its the first run
 export function install() {
