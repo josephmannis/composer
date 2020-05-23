@@ -48,37 +48,30 @@ export class Context {
         this._options = options;
     }
 
-    addSection(sectionTitle: string, parentId?: string) {
+    addSection(sectionTitle: string) {
         let newSection = new ContextSection(sectionTitle);
-        
-        if (parentId) {
-            let parent = this._getSection(parentId);
-            parent.addSubSection(newSection);
-        }
-
+ 
         this._addSection(newSection);
     }
     
     removeSection(sectionId: string) {
-        let section = this._getSection(sectionId);
-
-        // Remove parent
-        this._removeSectionParent(section);
-
+        // Remove from parent
+        this._removeSectionFromParent(sectionId);
         
         // TODO: Make sure the children don't stay in memory
         this._sections.delete(sectionId)
     }
 
-    setSectionParent(sectionId: string, parentId: string) {
+    moveSectionToSection(sectionId: string, parentId: string) {
         let section = this._getSection(sectionId);
         let toSection = this._getSection(parentId);
 
-        // Remove from old parent
-        this._removeSectionParent(section);
-
-        // Add to new parent
         toSection.addSubSection(section);
+    }
+
+    moveSectionToTopLevel(sectionId: string) {
+        // Remove parent
+        this._removeSectionFromParent(sectionId);
     }
 
     updateSectionName(sectionId: string, name: string) {
@@ -91,11 +84,13 @@ export class Context {
         section.options = options;
     }
 
-    private _removeSectionParent(section: ContextSection) {
-        // FIXME: Don't think this works because of deepclone
+    private _removeSectionFromParent(sectionId: string) {
+        let section = this._getSection(sectionId);
+        // FIXME: Don't think this works because of deeplc
         let parent = section.getParent();
         if (parent) {
-            parent.removeSubSection(section);
+            let parentRef = this._getSection(parent.id);
+            parentRef.removeSubSection(section);
         }
     }
 
