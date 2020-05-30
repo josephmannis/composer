@@ -34,9 +34,9 @@ interface IContextEditorService {
      * @param contextId 
      * @param title 
      */
-    addSectionToContext(contextId: string, context: string): Promise<Context>;
+    addNewSectionToContext(contextId: string, sectionTitle: string): Promise<Context>;
     removeSectionFromContext(contextId: string, sectionId: string): Promise<Context>;
-    updateOptionsForSection(contextId: string, options: IOption): Promise<Context>;
+    updateOptionsForSection(contextId: string, options: IOption[], sectionId: string): Promise<Context>;
 }
 
 
@@ -46,22 +46,65 @@ export class ContextEditorService implements IContextEditorService {
     constructor(repository: IContextRepository = new ContextRepository()) {
         this.repository = repository;
     }
+
     createContext(name: string): Promise<Context> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, reject) => {
+            let model = new Context(name);
+            this.repository.save(model)
+            .then( newModel => resolve(newModel))
+            .catch(error => reject(`Error creating context: ${error}`));
+        })
     }
+
     deleteContext(contextId: string): Promise<void> {
-        throw new Error("Method not implemented.");
+        return new Promise((resolve, reject) => {
+            this.repository.delete(contextId)
+            .then(res => resolve())
+            .catch(error => reject(`Error deleting context: ${error}`));
+        })
     }
+
     setContextName(contextId: string, name: string): Promise<Context> {
-        throw new Error("Method not implemented.");
+        return this._makeContextEdit(contextId, (model) => {
+            model.name = name;
+            return model;
+        }, 'Error updating context name')
     }
-    addSectionToContext(contextId: string, context: string): Promise<Context> {
-        throw new Error("Method not implemented.");
+
+    addNewSectionToContext(contextId: string, sectionTitle: string): Promise<Context> {
+        return this._makeContextEdit(contextId, (model) => {
+            model.addSection(sectionTitle);
+            return model;
+        }, 'Error adding section to context')
     }
+
     removeSectionFromContext(contextId: string, sectionId: string): Promise<Context> {
-        throw new Error("Method not implemented.");
+        return this._makeContextEdit(contextId, (model) => {
+            model.removeSection(sectionId);
+            return model;
+        }, 'Error removing section from context')
     }
-    updateOptionsForSection(contextId: string, options: IOption): Promise<Context> {
-        throw new Error("Method not implemented.");
+
+    updateOptionsForSection(contextId: string, options: IOption[], sectionId: string): Promise<Context> {
+        return this._makeContextEdit(contextId, (model) => {
+            model.setOptionsForSection(sectionId, options);
+            return model;
+        }, 'Error updating options for context')
+    }
+
+    private _makeContextEdit(contextId: string, editFunc: (model: Context) => Context, errorMessage: String): Promise<Context> {
+        return new Promise((resolve, reject) => {
+            this.repository.get(contextId)
+            .then(model => {
+                let editedModel = editFunc(model);
+                return editedModel;
+            }).then(model => {
+                return this.repository.save(model);
+            }).then(model => {
+                resolve(model);
+            }).catch(error => {
+                reject(`${errorMessage}: ${error}`);
+            });
+        })
     }
 }
