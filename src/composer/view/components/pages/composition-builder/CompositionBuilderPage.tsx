@@ -39,7 +39,6 @@ const CompositionBuilderPage: React.FC = () => {
             service.getAll()
             .then(res => {
                 onContextsFetched(res.map(c => {
-                    console.log(c);
                     return {
                         id: c.id,
                         name: c.name,
