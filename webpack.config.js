@@ -18,12 +18,13 @@ const commonConfig = {
   node: { __dirname: false, __filename: false },
   resolve: {
     alias: {
-      '@': srcPaths('src'),
-      '@main': srcPaths('src/main'),
-      '@models': srcPaths('src/models'),
+      '@application': srcPaths('src/composer/application'),
+      '@model': srcPaths('src/composer/domain/model'),
+      '@components': srcPaths('src/composer/view/components'),
+      '@view': srcPaths('src/composer/view'),
+      '@main': srcPaths('src/composer'),
       '@public': srcPaths('public'),
-      '@renderer': srcPaths('src/renderer'),
-      '@utils': srcPaths('src/utils'),
+      '@': srcPaths('src'),
     },
     extensions: ['.js', '.json', '.ts', '.tsx'],
   },
@@ -51,7 +52,7 @@ const commonConfig = {
 // #endregion
 
 const mainConfig = lodash.cloneDeep(commonConfig);
-mainConfig.entry = './src/main/main.ts';
+mainConfig.entry = './src/composer/main.ts';
 mainConfig.target = 'electron-main';
 mainConfig.output.filename = 'main.bundle.js';
 mainConfig.plugins = [
@@ -66,7 +67,7 @@ mainConfig.plugins = [
 ];
 
 const rendererConfig = lodash.cloneDeep(commonConfig);
-rendererConfig.entry = './src/renderer/renderer.tsx';
+rendererConfig.entry = './src/composer/view/renderer/renderer.tsx';
 rendererConfig.target = 'electron-renderer';
 rendererConfig.output.filename = 'renderer.bundle.js';
 rendererConfig.plugins = [
