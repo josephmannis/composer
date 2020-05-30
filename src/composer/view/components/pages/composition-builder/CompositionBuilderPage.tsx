@@ -6,8 +6,8 @@ import { useCompositionState } from '@/composer/view/state/composition/useCompos
 import { IOption, IContext } from '@/composer/view/lib/client';
 import { v4 as uuidv4 } from 'uuid';
 import Menu from '@/composer/view/components/molecules/menu/Menu';
-import { ContextService } from '@/composer/application/service/context/service';
-import Spinner from '../../atoms/spinner/Spinner';
+import { ContextLibrary } from '@application/service/context/library';
+import Spinner from '@components/atoms/spinner/Spinner';
 
 // TODO: use a connector
 const CompositionBuilderPage: React.FC = () => {
@@ -34,14 +34,17 @@ const CompositionBuilderPage: React.FC = () => {
 
         async function getContexts() {
             // TODO: convert to hook
-            let service = new ContextService();
+            let service = new ContextLibrary();
             // TODO: Catch error, show modal
-            service.all().then(res => {
+            service.getAll()
+            .then(res => {
                 onContextsFetched(res.map(c => {
-                return {
-                    ...c,
-                    ...c.model
-                }
+                    console.log(c);
+                    return {
+                        id: c.id,
+                        name: c.name,
+                        sections: c.getTopLevelSections()
+                    }
                 }));
             }).catch(error => window.alert(`Error fetching the contexts, whoops welcome to using an alpha app! ${error}`));
         }

@@ -32,8 +32,8 @@ const commonConfig = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        exclude: /node_modules/,
-        loader: 'ts-loader',
+        exclude: /(node_modules|test)/,
+        loader: 'ts-loader?configFile=tsconfig.webpack.json',
       },
       {
         test: /\.(scss|css)$/,

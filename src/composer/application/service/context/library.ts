@@ -5,7 +5,7 @@ import { ContextRepository } from "@main/persistence/filesystem/repository/conte
 
 export interface IContextLibraryService extends IQueries<Context> { };
 
-export class ClassContextLibrary implements IContextLibraryService {
+export class ContextLibrary implements IContextLibraryService {
     private repository: IContextRepository;
     
     constructor(repository: IContextRepository = new ContextRepository()) {
